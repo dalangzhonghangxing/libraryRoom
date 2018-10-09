@@ -22,10 +22,10 @@ public class LibraryRoom extends Thread {
         this.roomNumber = roomNumber;
     }
 
-    private static boolean isA = false;
-    private static boolean isB = false;
-    private static boolean isC = false;
-    private static boolean isD = false;
+    private static boolean isA;
+    private static boolean isB;
+    private static boolean isC;
+    private static boolean isD;
 
     private static String date = "";
     private static String today = "";
@@ -175,24 +175,6 @@ public class LibraryRoom extends Thread {
         }
     }
 
-    @Override
-    public void run() {
-        if (temp == 1)
-            processOne(roomNumber,
-                    "8%3A00", "10%3A40", "830", "1040", "a");
-        if (temp == 2)
-            processOne(roomNumber,
-                    "10%3A50", "12%3A50", "1050", "1250", "b");
-        if (temp == 3)
-            processOne(roomNumber,
-                    "13%3A00", "17%3A00", "1300", "1700", "c");
-//            processOne(roomNumber,
-//                "17%3A40", "18%3A30", "1740", "1830", "c");
-        if (temp == 4)
-            processOne(roomNumber,
-                    "17%3A10", "21%3A00", "1710", "2100", "d");
-    }
-
     private static void seat(String roomNumber, Gson gson, String prefix, Map head) {
         if (!isA || !isB || !isC || !isD) {
             LibraryRoom threadA = new LibraryRoom(1, roomNumber);
@@ -217,6 +199,22 @@ public class LibraryRoom extends Thread {
 
     }
 
+    @Override
+    public void run() {
+        if (temp == 1)
+            processOne(roomNumber,
+                    "8%3A00", "10%3A40", "830", "1040", "a");
+        if (temp == 2)
+            processOne(roomNumber,
+                    "10%3A50", "12%3A50", "1050", "1250", "b");
+        if (temp == 3)
+            processOne(roomNumber,
+                    "13%3A00", "17%3A00", "1300", "1700", "c");
+        if (temp == 4)
+            processOne(roomNumber,
+                    "17%3A10", "21%3A00", "1710", "2100", "d");
+    }
+
     public static void main(String[] args) {
 //        login();
 //         username = "51184407117";
@@ -225,6 +223,10 @@ public class LibraryRoom extends Thread {
 //         password = "gushiyi_2126";
          username = "51164500067";
          password = "guhang123";
+         isA = true;
+         isB = true;
+         isC = false;
+         isD = false;
         init(true);
         process();
     }
