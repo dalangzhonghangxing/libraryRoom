@@ -1,5 +1,3 @@
-
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,9 +13,17 @@ import com.google.gson.GsonBuilder;
 public class LibraryRoom extends Thread {
 
     private int temp;
+    private String roomNumber;
 
-    private static boolean isA = true;
-    private static boolean isB = true;
+
+    public LibraryRoom(int temp, String roomNumber) {
+        super();
+        this.temp = temp;
+        this.roomNumber = roomNumber;
+    }
+
+    private static boolean isA = false;
+    private static boolean isB = false;
     private static boolean isC = false;
     private static boolean isD = false;
 
@@ -28,10 +34,8 @@ public class LibraryRoom extends Thread {
     private static int adheadDay = 2;
     private static long interval = 500;
 
-    private static String username = "51184407117";
-    private static String password = "OTY_881227";
-//    private static String username = "51184407122";
-//    private static String password = "gushiyi_2126";
+    private static String username = "51184407122";
+    private static String password = "gushiyi_2126";
 
     private static String prefix = "http://202.120.82.2:8081/ClientWeb/pro/ajax";
 
@@ -39,25 +43,28 @@ public class LibraryRoom extends Thread {
 
     private static Gson gson = new GsonBuilder().create();
 
-    private static void init() {
+
+    private static void init(boolean iswait) {
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.add(Calendar.DATE, adheadDay);
         date = new SimpleDateFormat("yyyy-MM-dd").format(dateCalendar.getTime());
         today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
         long waitTime = new Date(today + " " + timeBegin).getTime() - aheadSecond * 1000;
 
-        try {
-            while (waitTime > System.currentTimeMillis()) {
-                System.out.println("还剩" + (waitTime - System.currentTimeMillis()) / 1000 + "秒");
-                Thread.sleep(Math.min(30 * 1000, waitTime - System.currentTimeMillis()));
-                waitTime = new Date(today + " " + timeBegin).getTime() - aheadSecond * 1000;
+        if (iswait)
+            try {
+                while (waitTime > System.currentTimeMillis()) {
+                    System.out.println("还剩" + (waitTime - System.currentTimeMillis()) / 1000 + "秒");
+                    Thread.sleep(Math.min(30 * 1000, waitTime - System.currentTimeMillis()));
+                    waitTime = new Date(today + " " + timeBegin).getTime() - aheadSecond * 1000;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private static void login() {
+        head = new HashMap();
         gson.fromJson(
                 HttpRequest.sendHttpGet(prefix + "/login.aspx?id=" + username + "&pwd=" + password + "&act=login", head),//用户名，密码
                 Map.class);
@@ -91,17 +98,18 @@ public class LibraryRoom extends Thread {
 
         int count = 1;
         while (!isA || !isB || !isC || !isD) {
-            System.out.println("第"+count+"次尝试，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+            System.out.println("第" + count + "次尝试，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
 
             seat(Room429, gson, prefix, head);
-            seat(Room411, gson, prefix, head);
-            seat(Room415, gson, prefix, head);
-			seat(Room413, gson, prefix, head);
-			seat(Room423, gson, prefix, head);
-			seat(Room425, gson, prefix, head);
-			seat(Room426, gson, prefix, head);
-			seat(Room428, gson, prefix, head);
-			seat(Room424, gson, prefix, head);
+//            seat(Room411, gson, prefix, head);
+//            seat(Room415, gson, prefix, head);
+//            seat(Room412, gson, prefix, head);
+//			seat(Room413, gson, prefix, head);
+//			seat(Room423, gson, prefix, head);
+//			seat(Room425, gson, prefix, head);
+//			seat(Room426, gson, prefix, head);
+//			seat(Room428, gson, prefix, head);
+//			seat(Room424, gson, prefix, head);
 
             try {
                 // 间隔1秒，以防玩崩
@@ -161,6 +169,8 @@ public class LibraryRoom extends Thread {
                 }
                 System.out.println("抢到房间" + roomNumber + "，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date())
                         + "\t from " + start_time + " to " + end_time);
+            } else {
+                System.out.println(res.toString());
             }
         }
     }
@@ -181,15 +191,6 @@ public class LibraryRoom extends Thread {
         if (temp == 4)
             processOne(roomNumber,
                     "17%3A10", "21%3A00", "1710", "2100", "d");
-    }
-
-    private String roomNumber;
-
-
-    public LibraryRoom(int temp, String roomNumber) {
-        super();
-        this.temp = temp;
-        this.roomNumber = roomNumber;
     }
 
     private static void seat(String roomNumber, Gson gson, String prefix, Map head) {
@@ -218,7 +219,13 @@ public class LibraryRoom extends Thread {
 
     public static void main(String[] args) {
 //        login();
-//        init();
+//         username = "51184407117";
+//         password = "OTY_881227";
+//         username = "51184407122";
+//         password = "gushiyi_2126";
+         username = "51164500067";
+         password = "guhang123";
+        init(true);
         process();
     }
 
