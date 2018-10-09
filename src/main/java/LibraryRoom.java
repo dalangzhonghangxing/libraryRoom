@@ -7,6 +7,8 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import static java.lang.System.out;
+
 /**
  * Hello world!
  */
@@ -51,16 +53,18 @@ public class LibraryRoom extends Thread {
         today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
         long waitTime = new Date(today + " " + timeBegin).getTime() - aheadSecond * 1000;
 
-        if (iswait)
+        if (iswait) {
             try {
+
                 while (waitTime > System.currentTimeMillis()) {
-                    System.out.println("还剩" + (waitTime - System.currentTimeMillis()) / 1000 + "秒");
+                    out.println("还剩" + (waitTime - System.currentTimeMillis()) / 1000 + "秒");
                     Thread.sleep(Math.min(30 * 1000, waitTime - System.currentTimeMillis()));
                     waitTime = new Date(today + " " + timeBegin).getTime() - aheadSecond * 1000;
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
     }
 
     private static void login() {
@@ -71,7 +75,7 @@ public class LibraryRoom extends Thread {
 
         head.put("Cookie", "ASP.NET_SessionId=" + head.get("ASP.NET_SessionId"));
         head.remove("ASP.NET_SessionId");
-        System.out.println("登陆成功，Cookie为" + head.get("Cookie").toString());
+        out.println("登陆成功，Cookie为" + head.get("Cookie").toString());
     }
 
     @SuppressWarnings("rawtypes")
@@ -98,18 +102,22 @@ public class LibraryRoom extends Thread {
 
         int count = 1;
         while (!isA || !isB || !isC || !isD) {
-            System.out.println("第" + count + "次尝试，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+            out.println("第" + count + "次尝试，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
 
-            seat(Room429, gson, prefix, head);
-//            seat(Room411, gson, prefix, head);
-//            seat(Room415, gson, prefix, head);
-//            seat(Room412, gson, prefix, head);
-//			seat(Room413, gson, prefix, head);
-//			seat(Room423, gson, prefix, head);
-//			seat(Room425, gson, prefix, head);
-//			seat(Room426, gson, prefix, head);
-//			seat(Room428, gson, prefix, head);
-//			seat(Room424, gson, prefix, head);
+            seat(Room429);
+            seat(Room411);
+            seat(Room415);
+
+            seat(Room412);
+            seat(Room414);
+            seat(Room422);
+            seat(Room424);
+            seat(Room413);
+            seat(Room423);
+            seat(Room425);
+            seat(Room426);
+            seat(Room428);
+            seat(Room427);
 
             try {
                 // 间隔1秒，以防玩崩
@@ -167,15 +175,15 @@ public class LibraryRoom extends Thread {
                     default:
                         break;
                 }
-                System.out.println("抢到房间" + roomNumber + "，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date())
+                out.println("抢到房间" + roomNumber + "，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date())
                         + "\t from " + start_time + " to " + end_time);
             } else {
-                System.out.println(res.toString());
+                out.println(res.toString());
             }
         }
     }
 
-    private static void seat(String roomNumber, Gson gson, String prefix, Map head) {
+    private static void seat(String roomNumber) {
         if (!isA || !isB || !isC || !isD) {
             LibraryRoom threadA = new LibraryRoom(1, roomNumber);
             threadA.run();
@@ -216,19 +224,38 @@ public class LibraryRoom extends Thread {
     }
 
     public static void main(String[] args) {
-//        login();
+        while (true) {
 //         username = "51184407117";
 //         password = "OTY_881227";
-//         username = "51184407122";
-//         password = "gushiyi_2126";
-         username = "51164500067";
-         password = "guhang123";
-         isA = true;
-         isB = true;
-         isC = false;
-         isD = false;
-        init(true);
-        process();
+//            username = "51184407122";
+//            password = "gushiyi_2126";
+//         username = "51164500067";
+//         password = "guhang123";
+            username = args[0];
+            password = args[1];
+            out.println("用户名为:" + username);
+
+            login();
+
+            // 当天 21:00:30 之后，则睡眠等待下一天。
+            today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
+            long stopTime = new Date(today + " " + "21:00:05").getTime();
+            if (System.currentTimeMillis() > stopTime) {
+                try {
+                    out.println("已过当天截止时间，等待下一天");
+                    Thread.sleep(4 * 3600 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            isA = false;
+            isB = false;
+            isC = false;
+            isD = false;
+
+            init(true);
+            process();
+        }
     }
 
 }
