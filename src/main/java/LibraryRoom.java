@@ -24,6 +24,23 @@ public class LibraryRoom extends Thread {
         this.roomNumber = roomNumber;
     }
 
+    //玻璃门
+    final static String Room411 = "3676604";
+    final static String Room412 = "3676641";
+    final static String Room413 = "3676645";
+    final static String Room414 = "3676656";
+    final static String Room415 = "3676664";
+    // 木门
+    final static String Room421 = "3676503";
+    final static String Room422 = "3676511";
+    final static String Room423 = "3676515";
+    final static String Room424 = "3676522";
+    final static String Room425 = "3676538";
+    final static String Room426 = "3676547";
+    final static String Room427 = "3676566";
+    final static String Room428 = "3676574";
+    final static String Room429 = "3676580";
+
     private static boolean isA;
     private static boolean isB;
     private static boolean isC;
@@ -34,7 +51,9 @@ public class LibraryRoom extends Thread {
     private static int aheadSecond = 120; //提前aheadSecond秒开始慢速发请求
     private static String timeBegin = "20:58:45"; //�?始快速发请求时间
     private static int adheadDay = 2;
-    private static long interval = 500;
+    private static long interval = 100;
+    private static int roomNumnber;
+    private static String room = null;
 
     private static String username = "51184407122";
     private static String password = "gushiyi_2126";
@@ -83,49 +102,25 @@ public class LibraryRoom extends Thread {
 
         login();
 
-        //玻璃门
-        final String Room411 = "3676604";
-        final String Room412 = "3676641";
-        final String Room413 = "3676645";
-        final String Room414 = "3676656";
-        final String Room415 = "3676664";
-        // 木门
-//		final String Room421 = "3676503";
-        final String Room422 = "3676511";
-        final String Room423 = "3676515";
-        final String Room424 = "3676522";
-        final String Room425 = "3676538";
-        final String Room426 = "3676547";
-        final String Room427 = "3676566";
-        final String Room428 = "3676574";
-        final String Room429 = "3676580";
-
         int count = 1;
         while (!isA || !isB || !isC || !isD) {
             out.println("第" + count + "次尝试，当前时间为" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
 
-            seat(Room429);
-            seat(Room411);
-            seat(Room415);
-
-            seat(Room412);
-            seat(Room414);
-            seat(Room422);
-            seat(Room424);
-            seat(Room413);
-            seat(Room423);
-            seat(Room425);
-            seat(Room426);
-            seat(Room428);
-            seat(Room427);
+            seat(room);
 
             try {
-                // 间隔1秒，以防玩崩
+                // 间隔一段时间，以防玩崩
                 Thread.sleep(interval);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             count++;
+
+            // 超过9点，则不抢了
+            long stopTime = new Date(today + " " + "21:00:05").getTime();
+            if (System.currentTimeMillis() > stopTime) {
+                break;
+            }
         }
 
     }
@@ -233,7 +228,58 @@ public class LibraryRoom extends Thread {
 //         password = "guhang123";
             username = args[0];
             password = args[1];
+            roomNumnber = Integer.parseInt(args[2]);
+
             out.println("用户名为:" + username);
+
+            switch (roomNumnber) {
+                case 411:
+                    room = Room411;
+                    break;
+                case 412:
+                    room = Room412;
+                    break;
+                case 413:
+                    room = Room413;
+                    break;
+                case 414:
+                    room = Room414;
+                    break;
+                case 415:
+                    room = Room415;
+                    break;
+                case 421:
+                    room = Room421;
+                    break;
+                case 422:
+                    room = Room422;
+                    break;
+                case 423:
+                    room = Room423;
+                    break;
+                case 424:
+                    room = Room424;
+                    break;
+                case 425:
+                    room = Room425;
+                    break;
+                case 426:
+                    room = Room426;
+                    break;
+                case 427:
+                    room = Room427;
+                    break;
+                case 428:
+                    room = Room428;
+                    break;
+                case 429:
+                    room = Room429;
+                    break;
+                default:
+                    room = Room429;
+            }
+
+            out.println("要抢占的房间号为:" + roomNumnber);
 
             login();
 
