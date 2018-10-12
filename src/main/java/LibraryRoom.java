@@ -220,12 +220,8 @@ public class LibraryRoom extends Thread {
 
     public static void main(String[] args) {
         while (true) {
-//         username = "51184407117";
-//         password = "OTY_881227";
-//            username = "51184407122";
-//            password = "gushiyi_2126";
-//         username = "51164500067";
-//         password = "guhang123";
+            // 51184407122 gushiyi_2126 429
+            // 51184407117 OTY_881227 428
             username = args[0];
             password = args[1];
             roomNumnber = Integer.parseInt(args[2]);

@@ -62,6 +62,7 @@
 
 
     <build>
+        <finalName>LibraryRoom</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
