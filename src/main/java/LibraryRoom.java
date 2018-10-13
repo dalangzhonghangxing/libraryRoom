@@ -49,10 +49,9 @@ public class LibraryRoom extends Thread {
     private static String date = "";
     private static String today = "";
     private static int aheadSecond = 120; //提前aheadSecond秒开始慢速发请求
-    private static String timeBegin = "20:58:45"; //�?始快速发请求时间
+    private static String timeBegin = "20:59:45"; //�?始快速发请求时间
     private static int adheadDay = 2;
-    private static long interval = 100;
-    private static int roomNumnber;
+    private static long interval = 1000;
     private static String room = null;
 
     private static String username = "51184407122";
@@ -64,7 +63,7 @@ public class LibraryRoom extends Thread {
 
     private static Gson gson = new GsonBuilder().create();
 
-
+    // 初始化
     private static void init(boolean iswait) {
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.add(Calendar.DATE, adheadDay);
@@ -86,6 +85,7 @@ public class LibraryRoom extends Thread {
         }
     }
 
+    // 登陆
     private static void login() {
         head = new HashMap();
         gson.fromJson(
@@ -97,7 +97,9 @@ public class LibraryRoom extends Thread {
         out.println("登陆成功，Cookie为" + head.get("Cookie").toString());
     }
 
-    @SuppressWarnings("rawtypes")
+    /**
+     * 开始抢
+     */
     private static void process() {
 
         login();
@@ -125,6 +127,9 @@ public class LibraryRoom extends Thread {
 
     }
 
+    /**
+     * 抢一个房间，一个时段的位置
+     */
     private void processOne(String roomNumber, String start, String end, String start_time, String end_time, String type) {
         boolean flag;
         switch (type) {
@@ -178,16 +183,21 @@ public class LibraryRoom extends Thread {
         }
     }
 
+    /**
+     * 抢座位，同时开四个线程
+     *
+     * @param roomNumber
+     */
     private static void seat(String roomNumber) {
         if (!isA || !isB || !isC || !isD) {
             LibraryRoom threadA = new LibraryRoom(1, roomNumber);
-            threadA.run();
+            threadA.start();
             LibraryRoom threadB = new LibraryRoom(2, roomNumber);
-            threadB.run();
+            threadB.start();
             LibraryRoom threadC = new LibraryRoom(3, roomNumber);
-            threadC.run();
+            threadC.start();
             LibraryRoom threadD = new LibraryRoom(4, roomNumber);
-            threadD.run();
+            threadD.start();
 
             // 串行化处理
             try {
@@ -206,10 +216,10 @@ public class LibraryRoom extends Thread {
     public void run() {
         if (temp == 1)
             processOne(roomNumber,
-                    "8%3A00", "10%3A40", "830", "1040", "a");
+                    "8%3A15", "11%3A50", "815", "1150", "a");
         if (temp == 2)
             processOne(roomNumber,
-                    "10%3A50", "12%3A50", "1050", "1250", "b");
+                    "12%3A00", "12%3A50", "1200", "1250", "b");
         if (temp == 3)
             processOne(roomNumber,
                     "13%3A00", "17%3A00", "1300", "1700", "c");
@@ -218,86 +228,117 @@ public class LibraryRoom extends Thread {
                     "17%3A10", "21%3A00", "1710", "2100", "d");
     }
 
+    // 设置策略
+    private static void setStrategy() {
+        Calendar dateCalendar = Calendar.getInstance();
+        int day = (dateCalendar.get(Calendar.DAY_OF_WEEK) + 2) % 7;
+        System.out.println("要抢占的是周 " + (day - 1) + " 的房间");
+
+        if (day > 1 && day < 7) { //周一到周五
+            isA = true;
+            isB = false;
+            isC = false;
+            isD = false;
+        } else {// 周末
+            isA = false;
+            isB = false;
+            isC = false;
+            isD = false;
+        }
+    }
+
+    // 超过21:00:05，等到下一天
+    private static void waitToNextDay() {
+        today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
+        long stopTime = new Date(today + " " + "21:00:05").getTime();
+        if (System.currentTimeMillis() > stopTime) {
+            try {
+                out.println("已过当天截止时间，等待下一天");
+                Thread.sleep(4 * 3600 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // 设置房间
+    private static void setRoom(int roomNumber) {
+        switch (roomNumber) {
+            case 411:
+                room = Room411;
+                break;
+            case 412:
+                room = Room412;
+                break;
+            case 413:
+                room = Room413;
+                break;
+            case 414:
+                room = Room414;
+                break;
+            case 415:
+                room = Room415;
+                break;
+            case 421:
+                room = Room421;
+                break;
+            case 422:
+                room = Room422;
+                break;
+            case 423:
+                room = Room423;
+                break;
+            case 424:
+                room = Room424;
+                break;
+            case 425:
+                room = Room425;
+                break;
+            case 426:
+                room = Room426;
+                break;
+            case 427:
+                room = Room427;
+                break;
+            case 428:
+                room = Room428;
+                break;
+            case 429:
+                room = Room429;
+                break;
+            default:
+                room = Room429;
+        }
+    }
+
     public static void main(String[] args) {
         while (true) {
             // 51184407122 gushiyi_2126 429
             // 51184407117 OTY_881227 428
             username = args[0];
             password = args[1];
-            roomNumnber = Integer.parseInt(args[2]);
+            int roomNumber = Integer.parseInt(args[2]);
 
             out.println("用户名为:" + username);
 
-            switch (roomNumnber) {
-                case 411:
-                    room = Room411;
-                    break;
-                case 412:
-                    room = Room412;
-                    break;
-                case 413:
-                    room = Room413;
-                    break;
-                case 414:
-                    room = Room414;
-                    break;
-                case 415:
-                    room = Room415;
-                    break;
-                case 421:
-                    room = Room421;
-                    break;
-                case 422:
-                    room = Room422;
-                    break;
-                case 423:
-                    room = Room423;
-                    break;
-                case 424:
-                    room = Room424;
-                    break;
-                case 425:
-                    room = Room425;
-                    break;
-                case 426:
-                    room = Room426;
-                    break;
-                case 427:
-                    room = Room427;
-                    break;
-                case 428:
-                    room = Room428;
-                    break;
-                case 429:
-                    room = Room429;
-                    break;
-                default:
-                    room = Room429;
-            }
+            // 设置要抢的房间号
+            setRoom(roomNumber);
 
-            out.println("要抢占的房间号为:" + roomNumnber);
+            out.println("要抢占的房间号为:" + roomNumber);
 
             login();
 
+            // 设置策略
+            setStrategy();
+
             // 当天 21:00:30 之后，则睡眠等待下一天。
-            today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
-            long stopTime = new Date(today + " " + "21:00:05").getTime();
-            if (System.currentTimeMillis() > stopTime) {
-                try {
-                    out.println("已过当天截止时间，等待下一天");
-                    Thread.sleep(4 * 3600 * 1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            isA = false;
-            isB = false;
-            isC = false;
-            isD = false;
+            waitToNextDay();
 
             init(true);
             process();
+
+            // 抢完后再等待下一天
+            waitToNextDay();
         }
     }
-
 }
