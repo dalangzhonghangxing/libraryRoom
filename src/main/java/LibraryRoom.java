@@ -48,7 +48,7 @@ public class LibraryRoom extends Thread {
 
     private static String date = "";
     private static String today = "";
-    private static int aheadSecond = 120; //提前aheadSecond秒开始慢速发请求
+    private static int aheadSecond = 30; //提前aheadSecond秒开始慢速发请求
     private static String timeBegin = "20:59:45"; //�?始快速发请求时间
     private static int adheadDay = 2;
     private static long interval = 1000;
@@ -313,8 +313,8 @@ public class LibraryRoom extends Thread {
 
     public static void main(String[] args) {
         while (true) {
-            // 51184407122 gushiyi_2126 429
-            // 51184407117 OTY_881227 428
+            // 51184407122 gushiyi_2126 412
+            // 51184407117 OTY_881227 414
             username = args[0];
             password = args[1];
             int roomNumber = Integer.parseInt(args[2]);
