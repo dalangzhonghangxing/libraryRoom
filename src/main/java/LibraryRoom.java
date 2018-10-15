@@ -338,7 +338,12 @@ public class LibraryRoom extends Thread {
             process();
 
             // 抢完后再等待下一天
-            waitToNextDay();
+            try {
+                out.println("已过当天截止时间，等待下一天");
+                Thread.sleep(4 * 3600 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
