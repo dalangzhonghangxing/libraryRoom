@@ -219,10 +219,10 @@ public class LibraryRoom extends Thread {
                     "8%3A15", "11%3A50", "815", "1150", "a");
         if (temp == 2)
             processOne(roomNumber,
-                    "12%3A00", "12%3A50", "1200", "1250", "b");
+                    "12%3A00", "14%3A00", "1200", "1400", "b");
         if (temp == 3)
             processOne(roomNumber,
-                    "13%3A00", "17%3A00", "1300", "1700", "c");
+                    "14%3A10", "17%3A00", "1410", "1700", "c");
         if (temp == 4)
             processOne(roomNumber,
                     "17%3A10", "21%3A00", "1710", "2100", "d");
