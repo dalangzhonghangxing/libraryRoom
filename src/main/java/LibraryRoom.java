@@ -230,9 +230,11 @@ public class LibraryRoom extends Thread {
 
     // 设置策略
     private static void setStrategy() {
+        int days[] = {7,1,2,3,4,5,6};
         Calendar dateCalendar = Calendar.getInstance();
-        int day = (dateCalendar.get(Calendar.DAY_OF_WEEK) + 2) % 7;
-        System.out.println("要抢占的是周 " + (day - 1) + " 的房间");
+        dateCalendar.add(Calendar.DATE,2);
+        int day = dateCalendar.get(Calendar.DAY_OF_WEEK);
+        System.out.println("要抢占的是周 " + days[day-1] + " 的房间");
 
         if (day > 1 && day < 7) { //周一到周五
             isA = true;
