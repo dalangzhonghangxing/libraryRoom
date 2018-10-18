@@ -76,7 +76,7 @@ public class LibraryRoom extends Thread {
 
                 while (waitTime > System.currentTimeMillis()) {
                     out.println("还剩" + (waitTime - System.currentTimeMillis()) / 1000 + "秒");
-                    Thread.sleep(Math.min(30 * 1000, waitTime - System.currentTimeMillis()));
+                    Thread.sleep(Math.min(600 * 1000, waitTime - System.currentTimeMillis()));
                     waitTime = new Date(today + " " + timeBegin).getTime() - aheadSecond * 1000;
                 }
             } catch (InterruptedException e) {
@@ -254,7 +254,7 @@ public class LibraryRoom extends Thread {
         if (System.currentTimeMillis() > stopTime) {
             try {
                 out.println("已过当天截止时间，等待下一天");
-                Thread.sleep(4 * 3600 * 1000);
+                Thread.sleep(20 * 3600 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -313,7 +313,7 @@ public class LibraryRoom extends Thread {
 
     public static void main(String[] args) {
         while (true) {
-            // 51184407122 gushiyi_2126 412
+            // 51184407122 gushiyi_2126 411
             // 51184407117 OTY_881227 414
             username = args[0];
             password = args[1];
@@ -340,7 +340,7 @@ public class LibraryRoom extends Thread {
             // 抢完后再等待下一天
             try {
                 out.println("已过当天截止时间，等待下一天");
-                Thread.sleep(4 * 3600 * 1000);
+                Thread.sleep(23 * 3600 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
