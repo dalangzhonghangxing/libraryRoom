@@ -119,10 +119,15 @@ public class LibraryRoom extends Thread {
             count++;
 
             // 超过9点，则不抢了
-            long stopTime = new Date(today + " " + "21:00:05").getTime();
+            long stopTime = new Date(today + " " + "21:00:15").getTime();
             if (System.currentTimeMillis() > stopTime) {
+                System.out.println(new SimpleDateFormat("HH:mm:ss").format(new Date()) + "没有全完抢到，已过截止时间");
                 break;
             }
+        }
+        if (isA && isB && isC && isD) {
+            System.out.println(new SimpleDateFormat("HH:mm:ss").format(new Date()) + "全部抢到");
+
         }
 
     }
@@ -230,11 +235,11 @@ public class LibraryRoom extends Thread {
 
     // 设置策略
     private static void setStrategy() {
-        int days[] = {7,1,2,3,4,5,6};
+        int days[] = {7, 1, 2, 3, 4, 5, 6};
         Calendar dateCalendar = Calendar.getInstance();
-        dateCalendar.add(Calendar.DATE,2);
+        dateCalendar.add(Calendar.DATE, 2);
         int day = dateCalendar.get(Calendar.DAY_OF_WEEK);
-        System.out.println("要抢占的是周 " + days[day-1] + " 的房间");
+        System.out.println("要抢占的是周 " + days[day - 1] + " 的房间");
 
         if (day > 1 && day < 7) { //周一到周五
             isA = true;
@@ -252,7 +257,7 @@ public class LibraryRoom extends Thread {
     // 超过21:00:05，等到下一天
     private static void waitToNextDay() {
         today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
-        long stopTime = new Date(today + " " + "21:00:05").getTime();
+        long stopTime = new Date(today + " " + "21:00:10").getTime();
         if (System.currentTimeMillis() > stopTime) {
             try {
                 out.println("已过当天截止时间，等待下一天");
