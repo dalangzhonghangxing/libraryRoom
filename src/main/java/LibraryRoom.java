@@ -53,6 +53,7 @@ public class LibraryRoom extends Thread {
     private static int adheadDay = 2;
     private static long interval = 1000;
     private static String room = null;
+    private static boolean failed = false;
 
     private static String username = "51184407122";
     private static String password = "gushiyi_2126";
@@ -65,6 +66,7 @@ public class LibraryRoom extends Thread {
 
     // 初始化
     private static void init(boolean iswait) {
+        failed = false;
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.add(Calendar.DATE, adheadDay);
         date = new SimpleDateFormat("yyyy-MM-dd").format(dateCalendar.getTime());
@@ -110,6 +112,15 @@ public class LibraryRoom extends Thread {
 
             seat(room);
 
+            if(failed){
+                // 如果失败，则同时开启多个线程，进行轰炸式抢占
+                seat(Room413);
+                seat(Room414);
+                seat(Room422);
+                seat(Room423);
+                seat(Room414);
+            }
+
             try {
                 // 间隔一段时间，以防玩崩
                 Thread.sleep(interval);
@@ -119,7 +130,7 @@ public class LibraryRoom extends Thread {
             count++;
 
             // 超过9点，则不抢了
-            long stopTime = new Date(today + " " + "21:00:15").getTime();
+            long stopTime = new Date(today + " " + "21:00:08").getTime();
             if (System.currentTimeMillis() > stopTime) {
                 System.out.println(new SimpleDateFormat("HH:mm:ss").format(new Date()) + "没有全完抢到，已过截止时间");
                 break;
@@ -162,6 +173,12 @@ public class LibraryRoom extends Thread {
                                     + "&end_time=" + end_time + "&up_file=&memo=&act=set_resv&_=1497964540852%20", head),
                             Map.class)
                     .get("msg").toString();
+
+            if (res.equals("预约与现有预约冲突")) {
+                // 被别人抢掉，启用候补策略
+                failed = true;
+            }
+
             flag = res.contains("成功");
             if (flag) {
                 switch (type) {
