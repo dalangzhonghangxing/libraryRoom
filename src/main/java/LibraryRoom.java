@@ -206,10 +206,10 @@ public class LibraryRoom extends Thread {
 
             // 串行化处理
             try {
-                threadA.join();
-                threadB.join();
-                threadC.join();
-                threadD.join();
+//                threadA.join();
+//                threadB.join();
+//                threadC.join();
+//                threadD.join();
             } catch (Exception e) {
                 e.printStackTrace();
             }
