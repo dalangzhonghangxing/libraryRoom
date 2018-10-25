@@ -119,7 +119,7 @@ public class LibraryRoom extends Thread {
                 seat(Room414);
                 seat(Room422);
                 seat(Room423);
-                seat(Room414);
+                seat(Room412);
                 break;
             }
 
