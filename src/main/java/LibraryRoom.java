@@ -114,11 +114,13 @@ public class LibraryRoom extends Thread {
 
             if(failed){
                 // 如果失败，则同时开启多个线程，进行轰炸式抢占
+                System.out.println("失败了，开始轰炸模式");
                 seat(Room413);
                 seat(Room414);
                 seat(Room422);
                 seat(Room423);
                 seat(Room414);
+                break;
             }
 
             try {
@@ -174,7 +176,7 @@ public class LibraryRoom extends Thread {
                             Map.class)
                     .get("msg").toString();
 
-            if (res.equals("预约与现有预约冲突")) {
+            if (res.contains("预约与现有预约冲突")) {
                 // 被别人抢掉，启用候补策略
                 failed = true;
             }
