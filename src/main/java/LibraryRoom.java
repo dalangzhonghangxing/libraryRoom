@@ -249,7 +249,7 @@ public class LibraryRoom extends Thread {
                     "17%3A00", "21%3A00", "1700", "2100", "c");
         if (temp == 4)
             processOne(roomNumber,
-                    "17%3A10", "21%3A00", "1710", "2100", "d");
+                    "17%3A30", "21%3A30", "1730", "2130", "d");
     }
 
     // 设置策略
@@ -262,9 +262,9 @@ public class LibraryRoom extends Thread {
 
         if (day > 1 && day < 7) { //周一到周五
             isA = true;
-            isB = false;
-            isC = false;
-            isD = true;
+            isB = true;
+            isC = true;
+            isD = false;
         } else {// 周末
             isA = false;
             isB = false;
