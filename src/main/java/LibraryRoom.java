@@ -240,16 +240,16 @@ public class LibraryRoom extends Thread {
     public void run() {
         if (temp == 1)
             processOne(roomNumber,
-                    "8%3A15", "11%3A50", "815", "1150", "a");
+                    "8%3A30", "12%3A00", "830", "1200", "a");
         if (temp == 2)
             processOne(roomNumber,
-                    "12%3A00", "16%3A00", "1200", "1600", "b");
+                    "12%3A10", "16%3A10", "1210", "1610", "b");
         if (temp == 3)
             processOne(roomNumber,
-                    "17%3A00", "21%3A00", "1700", "2100", "c");
+                    "16%3A40", "20%3A40", "1640", "2040", "c");
         if (temp == 4)
             processOne(roomNumber,
-                    "17%3A30", "21%3A30", "1730", "2130", "d");
+                    "20%3A50", "21%3A50", "2050", "2150", "d");
     }
 
     // 设置策略
@@ -262,9 +262,9 @@ public class LibraryRoom extends Thread {
 
         if (day > 1 && day < 7) { //周一到周五
             isA = true;
-            isB = true;
-            isC = true;
-            isD = false;
+            isB = false;
+            isC = false;
+            isD = true;
         } else {// 周末
             isA = false;
             isB = false;
