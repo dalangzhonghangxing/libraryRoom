@@ -260,7 +260,7 @@ public class LibraryRoom extends Thread {
         int day = dateCalendar.get(Calendar.DAY_OF_WEEK);
         System.out.println("要抢占的是周 " + days[day - 1] + " 的房间");
 
-        if (day > 1 && day < 7) { //周一到周五
+        if (day > 2 && day < 7) { //周二到周五
             isA = true;
             isB = false;
             isC = false;
@@ -268,6 +268,19 @@ public class LibraryRoom extends Thread {
         } else {// 周末
             isA = false;
             isB = false;
+            isC = false;
+            isD = true;
+        }
+
+        if(day == 4){ // 周三全天有课
+            isA = true;
+            isB = true;
+            isC = true;
+            isD = true;
+        }
+        if(day == 5){ //周四抢晚上
+            isA = true;
+            isB = true;
             isC = false;
             isD = true;
         }
