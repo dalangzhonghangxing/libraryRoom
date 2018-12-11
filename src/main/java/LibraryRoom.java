@@ -240,10 +240,10 @@ public class LibraryRoom extends Thread {
     public void run() {
         if (temp == 1)
             processOne(roomNumber,
-                    "8%3A30", "12%3A00", "830", "1200", "a");
+                    "9%3A00", "12%3A20", "900", "1220", "a");
         if (temp == 2)
             processOne(roomNumber,
-                    "12%3A10", "16%3A10", "1210", "1610", "b");
+                    "12%3A30", "16%3A30", "1230", "1630", "b");
         if (temp == 3)
             processOne(roomNumber,
                     "16%3A40", "20%3A40", "1640", "2040", "c");
@@ -262,25 +262,25 @@ public class LibraryRoom extends Thread {
 
         if (day > 2 && day < 7) { //周二到周五
             isA = true;
-            isB = false;
-            isC = false;
-            isD = true;
-        } else {// 周末
-            isA = false;
-            isB = false;
-            isC = false;
-            isD = true;
-        }
-
-        if(day == 4){ // 周三全天有课
-            isA = true;
             isB = true;
             isC = true;
             isD = true;
+        } else {//
+            isA = false;
+            isB = false;
+            isC = false;
+            isD = false;
         }
-        if(day == 5){ //周四抢晚上
+
+        if(day == 3){ // 周二
             isA = true;
-            isB = true;
+            isB = false;
+            isC = false;
+            isD = true;
+        }
+        if(day == 6){ //周五
+            isA = true;
+            isB = false;
             isC = false;
             isD = true;
         }
