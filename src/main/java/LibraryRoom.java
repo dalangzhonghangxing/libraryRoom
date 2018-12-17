@@ -269,7 +269,7 @@ public class LibraryRoom extends Thread {
             isA = false;
             isB = false;
             isC = false;
-            isD = false;
+            isD = true;
         }
 
         if(day == 3){ // 周二
