@@ -238,21 +238,28 @@ public class LibraryRoom extends Thread {
 
     @Override
     public void run() {
-        if (temp == 1)
+        // 设置时间。
+        // %3A是转义字符，每两个时间段之间要间隔10分钟，不然会抢占失败.
+        // 一个时间段最长4小时
+        if (temp == 1)//9:00-12:20
             processOne(roomNumber,
                     "9%3A00", "12%3A20", "900", "1220", "a");
-        if (temp == 2)
+        if (temp == 2)//12:30-16:30
             processOne(roomNumber,
                     "12%3A30", "16%3A30", "1230", "1630", "b");
-        if (temp == 3)
+        if (temp == 3)//16:40-20:40
             processOne(roomNumber,
                     "16%3A40", "20%3A40", "1640", "2040", "c");
-        if (temp == 4)
+        if (temp == 4)//20:50-21:50
             processOne(roomNumber,
                     "20%3A50", "21%3A50", "2050", "2150", "d");
     }
 
-    // 设置策略
+    /**
+     * 设置策略，一天总共分4个时间段，true表示不抢，false表示抢占。
+     * 时间段在run方法中设置。
+     * day从周日开始算，即day=0是周日，1是周一，7是周六。
+     */
     private static void setStrategy() {
         int days[] = {7, 1, 2, 3, 4, 5, 6};
         Calendar dateCalendar = Calendar.getInstance();
@@ -300,7 +307,10 @@ public class LibraryRoom extends Thread {
         }
     }
 
-    // 设置房间
+    /**
+     * 设置房间号。下面是所有房间号列表,41x是玻璃房，42x是木门的
+     * @param roomNumber
+     */
     private static void setRoom(int roomNumber) {
         switch (roomNumber) {
             case 411:
@@ -350,10 +360,13 @@ public class LibraryRoom extends Thread {
         }
     }
 
+    /**
+     * 每天9点抢后天的图书馆，设置的时间是要抢的那一天，比如周一抢周三的，设置的策略是周三的
+     * 进去target目录，执行 java -jar LibraryRoom.jar 学号 密码 房间号
+     * 只需要修改setStrategy、run这两个方法，运行之后可不关闭，会再后台一直抢占，不同每天运行
+     */
     public static void main(String[] args) {
         while (true) {
-            // 51184407122 gushiyi_2126 411
-            // 51184407117 OTY_881227 414
             username = args[0];
             password = args[1];
             int roomNumber = Integer.parseInt(args[2]);
