@@ -112,7 +112,7 @@ public class LibraryRoom extends Thread {
 
             seat(room);
 
-            if(failed){
+            if (failed) {
                 // 如果失败，则同时开启多个线程，进行轰炸式抢占
                 System.out.println("失败了，开始轰炸模式");
                 seat(Room413);
@@ -273,20 +273,20 @@ public class LibraryRoom extends Thread {
             isC = true;
             isD = true;
         } else {//
+            isA = true;
+            isB = true;
+            isC = true;
+            isD = true;
+        }
+
+        if (day == 5) { // 周四
             isA = false;
             isB = false;
             isC = false;
             isD = true;
         }
-
-        if(day == 3){ // 周二
-            isA = true;
-            isB = false;
-            isC = false;
-            isD = true;
-        }
-        if(day == 6){ //周五
-            isA = true;
+        if (day == 6) { //周五
+            isA = false;
             isB = false;
             isC = false;
             isD = true;
@@ -309,6 +309,7 @@ public class LibraryRoom extends Thread {
 
     /**
      * 设置房间号。下面是所有房间号列表,41x是玻璃房，42x是木门的
+     *
      * @param roomNumber
      */
     private static void setRoom(int roomNumber) {
