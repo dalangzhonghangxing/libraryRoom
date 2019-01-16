@@ -266,31 +266,35 @@ public class LibraryRoom extends Thread {
         dateCalendar.add(Calendar.DATE, 2);
         int day = dateCalendar.get(Calendar.DAY_OF_WEEK);
         System.out.println("要抢占的是周 " + days[day - 1] + " 的房间");
+        isA = false;
+        isB = false;
+        isC = false;
+        isD = true;
 
-        if (day > 2 && day < 7) { //周二到周五
-            isA = true;
-            isB = true;
-            isC = true;
-            isD = true;
-        } else {//
-            isA = true;
-            isB = true;
-            isC = true;
-            isD = true;
-        }
-
-        if (day == 5) { // 周四
-            isA = false;
-            isB = false;
-            isC = false;
-            isD = true;
-        }
-        if (day == 6) { //周五
-            isA = false;
-            isB = false;
-            isC = false;
-            isD = true;
-        }
+//        if (day > 2 && day < 7) { //周二到周五
+//            isA = true;
+//            isB = true;
+//            isC = true;
+//            isD = true;
+//        } else {//
+//            isA = true;
+//            isB = true;
+//            isC = true;
+//            isD = true;
+//        }
+//
+//        if (day == 5) { // 周四
+//            isA = false;
+//            isB = false;
+//            isC = false;
+//            isD = true;
+//        }
+//        if (day == 6) { //周五
+//            isA = false;
+//            isB = false;
+//            isC = false;
+//            isD = true;
+//        }
     }
 
     // 超过21:00:05，等到下一天
