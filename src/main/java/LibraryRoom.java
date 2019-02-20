@@ -243,16 +243,16 @@ public class LibraryRoom extends Thread {
         // 一个时间段最长4小时
         if (temp == 1)//9:00-12:20
             processOne(roomNumber,
-                    "9%3A00", "12%3A50", "900", "1250", "a");
+                    "9%3A00", "12%3A00", "900", "1200", "a");
         if (temp == 2)//12:30-16:30
             processOne(roomNumber,
-                    "13%3A00", "17%3A00", "1300", "1700", "b");
+                    "12%3A10", "16%3A10", "1210", "1610", "b");
         if (temp == 3)//16:40-20:40
             processOne(roomNumber,
-                    "17%3A10", "21%3A10", "1710", "2110", "c");
+                    "16%3A10", "20%3A10", "1610", "2010", "c");
         if (temp == 4)//20:50-21:50
             processOne(roomNumber,
-                    "20%3A50", "21%3A50", "2050", "2150", "d");
+                    "20%3A20", "21%3A50", "2020", "2150", "d");
     }
 
     /**
@@ -266,35 +266,24 @@ public class LibraryRoom extends Thread {
         dateCalendar.add(Calendar.DATE, 2);
         int day = dateCalendar.get(Calendar.DAY_OF_WEEK);
         System.out.println("要抢占的是周 " + days[day - 1] + " 的房间");
-        isA = false;
-        isB = false;
-        isC = false;
+        isA = true;
+        isB = true;
+        isC = true;
         isD = true;
 
-//        if (day > 2 && day < 7) { //周二到周五
-//            isA = true;g
-//            isB = true;
-//            isC = true;
-//            isD = true;
-//        } else {//
-//            isA = true;
-//            isB = true;
-//            isC = true;
-//            isD = true;
-//        }
-//
-//        if (day == 5) { // 周四
-//            isA = false;
-//            isB = false;
-//            isC = false;
-//            isD = true;
-//        }
-//        if (day == 6) { //周五
-//            isA = false;
-//            isB = false;
-//            isC = false;
-//            isD = true;
-//        }
+        if (day == 1 || (day > 4 && day <= 7)) { //周日、周四到周六
+            isA = false;
+            isB = false;
+            isC = false;
+        }
+
+        if (day == 2) { // 周一
+            isA = false;
+        }
+        if (day == 3 || day == 4) { //周二、周三
+            isB = false;
+            isC = false;
+        }
     }
 
     // 超过21:00:05，等到下一天
