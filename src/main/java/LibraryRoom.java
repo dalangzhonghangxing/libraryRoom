@@ -358,6 +358,7 @@ public class LibraryRoom extends Thread {
      * 每天9点抢后天的图书馆，设置的时间是要抢的那一天，比如周一抢周三的，设置的策略是周三的
      * 进去target目录，执行 java -jar LibraryRoom.jar 学号 密码 房间号
      * 只需要修改setStrategy、run这两个方法，运行之后可不关闭，会再后台一直抢占，不同每天运行
+     * 51184407122 gushiyi_2126
      */
     public static void main(String[] args) {
         while (true) {
