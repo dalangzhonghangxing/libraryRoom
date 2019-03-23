@@ -271,19 +271,12 @@ public class LibraryRoom extends Thread {
         isC = true;
         isD = true;
 
-        if (day == 1 || (day > 4 && day <= 7)) { //周日、周四到周六
+        if (day == 1 || day == 7) { //周六周日
             isA = false;
             isB = false;
             isC = false;
         }
 
-        if (day == 2) { // 周一
-            isA = false;
-        }
-        if (day == 3 || day == 4) { //周二、周三
-            isB = false;
-            isC = false;
-        }
     }
 
     // 超过21:00:05，等到下一天
